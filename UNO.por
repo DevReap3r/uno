@@ -8,6 +8,7 @@ programa{
 	cadeia CARTAS[54][3] = {{"+4","ESPECIAL","4"},{" Ͼ","ESPECIAL","4"}, {" 0","VERMELHO","1"},{" 0","VERDE","1"},{" 0","AMARELO","1"},{" 0","AZUL","1"},{" 1","VERMELHO","2"},{" 1","VERDE","2"},{" 1","AMARELO","2"},{" 1","AZUL","2"},{" 2","VERMELHO","2"},{" 2","VERDE","2"},{" 2","AMARELO","2"},{" 2","AZUL","2"},{" 3","VERMELHO","2"},{" 3","VERDE","2"},{" 3","AMARELO","2"},{" 3","AZUL","2"},{" 4","VERMELHO","2"},{" 4","VERDE","2"},{" 4","AMARELO","2"},{" 4","AZUL","2"},{" 5","VERMELHO","2"},{" 5","VERDE","2"},{" 5","AMARELO","2"},{" 5","AZUL","2"},{" 6","VERMELHO","2"},{" 6","VERDE","2"},{" 6","AMARELO","2"},{" 6","AZUL","2"},{" 7","VERMELHO","2"},{" 7","VERDE","2"},{" 7","AMARELO","2"},{" 7","AZUL","2"},{" 8","VERMELHO","2"},{" 8","VERDE","2"},{" 8","AMARELO","2"},{" 8","AZUL","2"},{" 9","VERMELHO","2"},{" 9","VERDE","2"},{" 9","AMARELO","2"},{" 9","AZUL","2"},{"+2","VERMELHO","2"},{"+2","VERDE","2"},{"+2","AMARELO","2"},{"+2","AZUL","2"},{" Ѳ","VERMELHO","2"},{" Ѳ","","2"},{" Ѳ","AMARELO","2"},{" Ѳ","AZUL","2"},{" Ѻ","VERMELHO","2"},{" Ѻ","VERDE","2"},{" Ѻ","AMARELO","2"},{" Ѻ","AZUL","2"}}					
 	inteiro numero
 	cadeia teste
+	cadeia play
 
 	funcao sorteio(inteiro n, caracter player){
 		para (inteiro s = 0; s < n; s++){
@@ -16,7 +17,7 @@ programa{
 			}enquanto (CARTAS[numero][2] == "0")
 			CARTAS[numero][2] = tip.inteiro_para_cadeia(tip.cadeia_para_inteiro(CARTAS[numero][2],10) - 1, 10)
 			escolha(player){
-				caso 'M':
+	 			caso 'M':
 					deck_mesa[0] = CARTAS[numero][0]
 					deck_mesa[1] = CARTAS[numero][1]
 					pare
@@ -62,13 +63,32 @@ programa{
 		escreva(topo_carta+"\n"+interior1_carta+"\n"+interior2_carta+"\n"+interior3_carta+"\n"+numero_carta+"\n"+interior3_carta+"\n"+interior2_carta+"\n"+interior1_carta+"\n"+fundo_carta)
 		escreva("\n"+cor_carta)
 	}
+	funcao logo(){
+		escreva(" **     ** ****     **   ******* \n")
+		escreva("/**    /**/**/**   /**  **/////** \n")
+		escreva("/**    /**/**//**  /** **     //** \n")
+		escreva("/**    /**/** //** /**/**      /** \n")
+		escreva("/**    /**/**  //**/**/**      /** \n")
+		escreva("/**    /**/**   //****//**     ** \n")
+		escreva("//******* /**    //*** //******* \n")
+		escreva(" ///////  //      ///   /////// \n")
+		escreva("COMEÇAR O JOGO? [S/N]\n")
+	}
 	funcao inicio()
-	{
-		sorteio(1,'M')
-		mostrar_cartas_mesa(deck_mesa[0],deck_mesa[1])
-		mostrar_cartas_jogador(7)
-		
-		
+	{	
+		faca{
+			limpa()
+			logo()
+			leia(play)
+			
+		}enquanto(tx.caixa_alta(play) != "S" e tx.caixa_alta(play) != "N")
+		se (tx.caixa_alta(play) == "S") {
+			limpa()
+			sorteio(1,'M')
+			mostrar_cartas_mesa(deck_mesa[0],deck_mesa[1])
+			mostrar_cartas_jogador(7)
+		}senao
+			limpa()	
 	}
 }
 /* $$$ Portugol Studio $$$ 
@@ -76,7 +96,7 @@ programa{
  * Esta seção do arquivo guarda informações do Portugol Studio.
  * Você pode apagá-la se estiver utilizando outro editor.
  * 
- * @POSICAO-CURSOR = 2018; 
+ * @POSICAO-CURSOR = 4019; 
  * @PONTOS-DE-PARADA = ;
  * @SIMBOLOS-INSPECIONADOS = {deck_jogador, 7, 22, 12};
  * @FILTRO-ARVORE-TIPOS-DE-DADO = inteiro, real, logico, cadeia, caracter, vazio;
