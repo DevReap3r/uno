@@ -6,7 +6,7 @@ programa{
 	cadeia topo_carta,interior1_carta,interior2_carta,interior3_carta,numero_carta,fundo_carta, cor_carta
 	cadeia deck_mesa[2], deck_jogador[108][2], deck_pc[108][2]
 	cadeia CARTAS[54][3] = {{"+4","ESPECIAL","4"},{" Ͼ","ESPECIAL","4"}, {" 0","VERMELHO","1"},{" 0","VERDE","1"},{" 0","AMARELO","1"},{" 0","AZUL","1"},{" 1","VERMELHO","2"},{" 1","VERDE","2"},{" 1","AMARELO","2"},{" 1","AZUL","2"},{" 2","VERMELHO","2"},{" 2","VERDE","2"},{" 2","AMARELO","2"},{" 2","AZUL","2"},{" 3","VERMELHO","2"},{" 3","VERDE","2"},{" 3","AMARELO","2"},{" 3","AZUL","2"},{" 4","VERMELHO","2"},{" 4","VERDE","2"},{" 4","AMARELO","2"},{" 4","AZUL","2"},{" 5","VERMELHO","2"},{" 5","VERDE","2"},{" 5","AMARELO","2"},{" 5","AZUL","2"},{" 6","VERMELHO","2"},{" 6","VERDE","2"},{" 6","AMARELO","2"},{" 6","AZUL","2"},{" 7","VERMELHO","2"},{" 7","VERDE","2"},{" 7","AMARELO","2"},{" 7","AZUL","2"},{" 8","VERMELHO","2"},{" 8","VERDE","2"},{" 8","AMARELO","2"},{" 8","AZUL","2"},{" 9","VERMELHO","2"},{" 9","VERDE","2"},{" 9","AMARELO","2"},{" 9","AZUL","2"},{"+2","VERMELHO","2"},{"+2","VERDE","2"},{"+2","AMARELO","2"},{"+2","AZUL","2"},{" Ѳ","VERMELHO","2"},{" Ѳ","","2"},{" Ѳ","AMARELO","2"},{" Ѳ","AZUL","2"},{" Ѻ","VERMELHO","2"},{" Ѻ","VERDE","2"},{" Ѻ","AMARELO","2"},{" Ѻ","AZUL","2"}}					
-	inteiro numero,carta_jogada,qnt_cartas_jogador = 0 
+	inteiro numero,carta_jogada,qnt_cartas_jogador = 0, qnt_cartas_pc = 0 
 	cadeia jogador
 	cadeia play
 
@@ -56,14 +56,22 @@ programa{
 		}
 	}
 	funcao mostrar_cartas_mesa(cadeia carta,cadeia cor){
-		topo_carta = tx.preencher_a_esquerda(' ',48, "▄▄▄▄▄▄▄▄▄▄▄ ")
-		interior1_carta = tx.preencher_a_esquerda(' ',48, "▌▒▒▒▒▒▒▒▒▒▐ ")
-		interior2_carta = tx.preencher_a_esquerda(' ',48,"▌▒▒▒   ▒▒▒▐ ")
-		interior3_carta = tx.preencher_a_esquerda(' ',48,"▌▒▒     ▒▒▐ ")
-		numero_carta = tx.preencher_a_esquerda(' ',48,"▌▒  "+carta+"   ▒▐ ")
-		fundo_carta = tx.preencher_a_esquerda(' ',48,"▀▀▀▀▀▀▀▀▀▀▀ ")
-		escreva(topo_carta+"\n"+interior1_carta+"\n"+interior2_carta+"\n"+interior3_carta+"\n"+numero_carta+tx.preencher_a_esquerda(' ',34, "TURNO: "+ jogador)+"\n"+interior3_carta+"\n"+interior2_carta+tx.preencher_a_esquerda(' ',38, "COMPRAR CARTA(C) ")+"\n"+interior1_carta+"\n"+fundo_carta+"\n")
-		escreva(tx.preencher_a_esquerda(' ',45, cor+"\n"))
+		topo_carta = tx.preencher_a_esquerda(' ',52, "▄▄▄▄▄▄▄▄▄▄▄ ")
+		interior1_carta = tx.preencher_a_esquerda(' ',52, "▌▒▒▒▒▒▒▒▒▒▐ ")
+		interior2_carta = tx.preencher_a_esquerda(' ',52,"▌▒▒▒   ▒▒▒▐ ")
+		interior3_carta = tx.preencher_a_esquerda(' ',52,"▌▒▒     ▒▒▐ ")
+		numero_carta = tx.preencher_a_esquerda(' ',52,"▌▒  "+carta+"   ▒▐ ")
+		fundo_carta = tx.preencher_a_esquerda(' ',52,"▌▒  "+carta+"   ▒▐ ")
+		escreva(topo_carta+tx.preencher_a_esquerda(' ',52, "▄▄▄▄▄▄▄▄▄▄▄ ")+"\n")
+		escreva(interior1_carta+tx.preencher_a_esquerda(' ',52, "▌▒▒▒▒▒▒▒▒▒▐ ")+"\n")
+		escreva(interior2_carta+tx.preencher_a_esquerda(' ',52, "▌▒▒▒▒▒▒▒▒▒▐ ")+"\n")
+		escreva(interior3_carta+tx.preencher_a_esquerda(' ',52, "▌▒▒▒▒▒▒▒▒▒▐ ")+"\n")
+		escreva(numero_carta+tx.preencher_a_esquerda(' ',34, "TURNO: "+ jogador)+tx.preencher_a_esquerda(' ',18, "▌▒▒▒▒▒▒▒▒▒▐ ")+"\n")
+		escreva(interior3_carta+tx.preencher_a_esquerda(' ',52, "▌▒▒▒▒▒▒▒▒▒▐ ")+"\n")
+		escreva(interior2_carta+tx.preencher_a_esquerda(' ',52, "▌▒▒▒▒▒▒▒▒▒▐ ")+"\n")
+		escreva(interior1_carta+tx.preencher_a_esquerda(' ',52, "▌▒▒▒▒▒▒▒▒▒▐ ")+"\n")
+		escreva(fundo_carta+tx.preencher_a_esquerda(' ',52, "▄▄▄▄▄▄▄▄▄▄▄ ")+"\n")
+		escreva(tx.preencher_a_esquerda(' ',45, cor)+tx.preencher_a_esquerda(' ',54, "COMPRAR (C)\n"))
 	}
 	funcao mostrar_cartas_pc(inteiro qnt_cartas){
 		topo_carta = "▄▄▄▄▄▄▄▄▄▄▄ "
@@ -71,16 +79,14 @@ programa{
 		interior2_carta = "▌▒▒▒▒▒▒▒▒▒▐ "
 		interior3_carta = "▌▒▒▒▒▒▒▒▒▒▐ "
 		numero_carta = "▌▒▒▒▒▒▒▒▒▒▐ "
-		fundo_carta = "▀▀▀▀▀▀▀▀▀▀▀ "
 		para(inteiro i = 1; i<qnt_cartas;i++){
 			topo_carta += "▄▄▄▄▄▄▄▄▄▄▄ "
 			interior1_carta += "▌▒▒▒▒▒▒▒▒▒▐ "
 			interior2_carta += "▌▒▒▒▒▒▒▒▒▒▐ "
 			interior3_carta += "▌▒▒▒▒▒▒▒▒▒▐ "
 			numero_carta += "▌▒▒▒▒▒▒▒▒▒▐ "
-			fundo_carta += "▀▀▀▀▀▀▀▀▀▀▀ "
 		}
-		escreva(topo_carta+"\n"+interior1_carta+"\n"+interior2_carta+"\n"+interior3_carta+"\n"+numero_carta+"\n"+interior3_carta+"\n"+interior2_carta+"\n"+interior1_carta+"\n"+fundo_carta)
+		escreva(topo_carta+"\n"+interior1_carta+"\n"+interior2_carta+"\n"+interior3_carta+"\n"+numero_carta+"\n"+interior3_carta+"\n"+interior2_carta+"\n"+interior1_carta+"\n"+topo_carta)
 		escreva("\n")
 	}
 	funcao mostrar_cartas_jogador(inteiro qnt_cartas){
@@ -89,7 +95,6 @@ programa{
 		interior2_carta = "▌▒▒▒   ▒▒▒▐ "
 		interior3_carta = "▌▒▒     ▒▒▐ "
 		numero_carta = "▌▒  "+deck_jogador[0][0]+"   ▒▐ "
-		fundo_carta = "▀▀▀▀▀▀▀▀▀▀▀ "
 		cor_carta = deck_jogador[0][1] +"(1)"
 		para(inteiro i = 1; i<qnt_cartas;i++){
 			topo_carta += "▄▄▄▄▄▄▄▄▄▄▄ "
@@ -97,10 +102,9 @@ programa{
 			interior2_carta += "▌▒▒▒   ▒▒▒▐ "
 			interior3_carta += "▌▒▒     ▒▒▐ "
 			numero_carta += "▌▒  "+deck_jogador[i][0]+"   ▒▐ "
-			fundo_carta += "▀▀▀▀▀▀▀▀▀▀▀ "
 			cor_carta += tx.preencher_a_esquerda(' ',12, deck_jogador[i][1]+"("+(i+1)+")")
 		}
-		escreva(topo_carta+"\n"+interior1_carta+"\n"+interior2_carta+"\n"+interior3_carta+"\n"+numero_carta+"\n"+interior3_carta+"\n"+interior2_carta+"\n"+interior1_carta+"\n"+fundo_carta)
+		escreva(topo_carta+"\n"+interior1_carta+"\n"+interior2_carta+"\n"+interior3_carta+"\n"+numero_carta+"\n"+interior3_carta+"\n"+interior2_carta+"\n"+interior1_carta+"\n"+topo_carta)
 		escreva("\n"+cor_carta)
 	}
 	funcao logo(){
@@ -136,11 +140,11 @@ programa{
 					mostrar_cartas_jogador(qnt_cartas_jogador)
 					escreva("\n")
 				}
-				jogar_carta()			
+				jogar_carta_jogador()			
 			}
 		}
 	}
-	funcao jogar_carta(){
+	funcao jogar_carta_jogador(){
 		deck_mesa[0] = deck_jogador[carta_jogada - 1][0]
 		deck_mesa[1] = deck_jogador[carta_jogada - 1][1]
 		para(inteiro i = 0; i< qnt_cartas_jogador - 1; i++){
@@ -157,13 +161,30 @@ programa{
 		mostrar_cartas_mesa(deck_mesa[0],deck_mesa[1])
 		mostrar_cartas_jogador(qnt_cartas_jogador-1)
 	}
+	funcao jogar_carta_pc(){
+		deck_mesa[0] = deck_pc[carta_jogada - 1][0]
+		deck_mesa[1] = deck_pc[carta_jogada - 1][1]
+		para(inteiro i = 0; i< qnt_cartas_pc - 1; i++){
+			se (i < carta_jogada - 1){
+				deck_pc[i][0] = deck_pc[i][0]
+				deck_pc[i][1] = deck_pc[i][1]
+			}
+			senao se (i > carta_jogada - 1){
+				deck_pc[i-1][0] = deck_pc[i][0]
+				deck_pc[i-1][1] = deck_pc[i][1]
+			}
+		}
+		limpa()
+		mostrar_cartas_mesa(deck_mesa[0],deck_mesa[1])
+		mostrar_cartas_pc(qnt_cartas_pc-1)
+	}
 }
 /* $$$ Portugol Studio $$$ 
  * 
  * Esta seção do arquivo guarda informações do Portugol Studio.
  * Você pode apagá-la se estiver utilizando outro editor.
  * 
- * @POSICAO-CURSOR = 3272; 
+ * @POSICAO-CURSOR = 3094; 
  * @PONTOS-DE-PARADA = ;
  * @SIMBOLOS-INSPECIONADOS = ;
  * @FILTRO-ARVORE-TIPOS-DE-DADO = inteiro, real, logico, cadeia, caracter, vazio;
