@@ -127,23 +127,27 @@ programa{
 			limpa()
 		senao{
 			iniciar_jogo()
-			se (jogador == "PC"){
-				
-			}senao se(jogador == "JOGADOR"){
-				leia(carta_jogada)
-				se(carta_jogada == 0){
-					comprar_carta(1, 'J')
-					
-				}senao{
-					enquanto(deck_jogador[carta_jogada-1][0] != deck_mesa[0] e deck_jogador[carta_jogada-1][1] != deck_mesa[1]){
-						limpa()
-						mostrar_cartas_mesa(deck_mesa[0],deck_mesa[1])
-						mostrar_cartas_jogador(qnt_cartas_jogador)
-						escreva("\n")
+			enquanto(qnt_cartas_jogador > 0 ou qnt_cartas_pc > 0){
+				se (jogador == "PC"){
+					leia(carta_jogada)
+					se(carta_jogada == 0){
+						comprar_carta(1, 'P')
+					}
+				}senao se(jogador == "JOGADOR"){
+					leia(carta_jogada)
+					se(carta_jogada == 0){
+						comprar_carta(1, 'J')
+					}senao{
+						enquanto(deck_jogador[carta_jogada-1][0] != deck_mesa[0] e deck_jogador[carta_jogada-1][1] != deck_mesa[1]){
+							limpa()
+							mostrar_cartas_mesa(deck_mesa[0],deck_mesa[1])
+							mostrar_cartas_jogador(qnt_cartas_jogador)
+							escreva("\n")
+						}
+						jogar_carta_jogador()
 					}
 				}
-			}
-				jogar_carta_jogador()				
+			}				
 		}
 	}
 	funcao jogar_carta_jogador(){
@@ -163,6 +167,7 @@ programa{
 		mostrar_cartas_pc(qnt_cartas_pc)
 		mostrar_cartas_mesa(deck_mesa[0],deck_mesa[1])
 		mostrar_cartas_jogador(qnt_cartas_jogador-1)
+		jogador = "PC"
 	}
 	funcao jogar_carta_pc(inteiro c){
 		deck_mesa[0] = deck_jogador[c - 1][0]
@@ -181,9 +186,10 @@ programa{
 		mostrar_cartas_pc(qnt_cartas_pc - 1)
 		mostrar_cartas_mesa(deck_mesa[0],deck_mesa[1])
 		mostrar_cartas_jogador(qnt_cartas_jogador)
+		jogador = "JOGADOR"
 	}
 	funcao comprar_carta(inteiro n, caracter p){
-		para (inteiro i = 0; i < n; n++){
+		para (inteiro i = 0; i < n; i++){
 			faca{
 				numero  = u.sorteia(0, 53)
 			}enquanto (CARTAS[numero][2] == "0")
@@ -212,7 +218,7 @@ programa{
  * Esta seção do arquivo guarda informações do Portugol Studio.
  * Você pode apagá-la se estiver utilizando outro editor.
  * 
- * @POSICAO-CURSOR = 5827; 
+ * @POSICAO-CURSOR = 7441; 
  * @PONTOS-DE-PARADA = ;
  * @SIMBOLOS-INSPECIONADOS = ;
  * @FILTRO-ARVORE-TIPOS-DE-DADO = inteiro, real, logico, cadeia, caracter, vazio;
