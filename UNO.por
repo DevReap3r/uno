@@ -3,10 +3,11 @@ programa{
 	inclua biblioteca Util --> u 
 	inclua biblioteca Texto --> tx
 	inclua biblioteca Tipos --> tip
-	cadeia topo_carta,interior1_carta,interior2_carta,interior3_carta,numero_carta,fundo_carta, cor_carta
+	cadeia topo_carta,interior1_carta,interior2_carta,interior3_carta,numero_carta,fundo_carta, cor_carta, lbl_comprar = "COMPRAR CARTA(0) "
 	cadeia deck_mesa[2], deck_jogador[108][2], deck_pc[108][2]
-	cadeia CARTAS[54][3] = {{"+4","ESPECIAL","4"},{" Ͼ","ESPECIAL","4"}, {" 0","VERMELHO","1"},{" 0","VERDE","1"},{" 0","AMARELO","1"},{" 0","AZUL","1"},{" 1","VERMELHO","2"},{" 1","VERDE","2"},{" 1","AMARELO","2"},{" 1","AZUL","2"},{" 2","VERMELHO","2"},{" 2","VERDE","2"},{" 2","AMARELO","2"},{" 2","AZUL","2"},{" 3","VERMELHO","2"},{" 3","VERDE","2"},{" 3","AMARELO","2"},{" 3","AZUL","2"},{" 4","VERMELHO","2"},{" 4","VERDE","2"},{" 4","AMARELO","2"},{" 4","AZUL","2"},{" 5","VERMELHO","2"},{" 5","VERDE","2"},{" 5","AMARELO","2"},{" 5","AZUL","2"},{" 6","VERMELHO","2"},{" 6","VERDE","2"},{" 6","AMARELO","2"},{" 6","AZUL","2"},{" 7","VERMELHO","2"},{" 7","VERDE","2"},{" 7","AMARELO","2"},{" 7","AZUL","2"},{" 8","VERMELHO","2"},{" 8","VERDE","2"},{" 8","AMARELO","2"},{" 8","AZUL","2"},{" 9","VERMELHO","2"},{" 9","VERDE","2"},{" 9","AMARELO","2"},{" 9","AZUL","2"},{"+2","VERMELHO","2"},{"+2","VERDE","2"},{"+2","AMARELO","2"},{"+2","AZUL","2"},{" Ѳ","VERMELHO","2"},{" Ѳ","","2"},{" Ѳ","AMARELO","2"},{" Ѳ","AZUL","2"},{" Ѻ","VERMELHO","2"},{" Ѻ","VERDE","2"},{" Ѻ","AMARELO","2"},{" Ѻ","AZUL","2"}}					
-	inteiro numero,carta_jogada,qnt_cartas_jogador = 0,qnt_cartas_pc = 0  
+	cadeia CARTAS[54][3] = {{"+4","ESPECIAL","4"},{" Ͼ","ESPECIAL","4"}, {" 0","VERMELHO","1"},{" 0","VERDE   ","1"},{" 0","AMARELO ","1"},{" 0","AZUL    ","1"},{" 1","VERMELHO","2"},{" 1","VERDE   ","2"},{" 1","AMARELO ","2"},{" 1","AZUL    ","2"},{" 2","VERMELHO","2"},{" 2","VERDE   ","2"},{" 2","AMARELO ","2"},{" 2","AZUL    ","2"},{" 3","VERMELHO","2"},{" 3","VERDE   ","2"},{" 3","AMARELO ","2"},{" 3","AZUL    ","2"},{" 4","VERMELHO","2"},{" 4","VERDE   ","2"},{" 4","AMARELO ","2"},{" 4","AZUL    ","2"},{" 5","VERMELHO","2"},{" 5","VERDE   ","2"},{" 5","AMARELO ","2"},{" 5","AZUL    ","2"},{" 6","VERMELHO","2"},{" 6","VERDE   ","2"},{" 6","AMARELO ","2"},{" 6","AZUL    ","2"},{" 7","VERMELHO","2"},{" 7","VERDE   ","2"},{" 7","AMARELO ","2"},{" 7","AZUL    ","2"},{" 8","VERMELHO","2"},{" 8","VERDE   ","2"},{" 8","AMARELO ","2"},{" 8","AZUL    ","2"},{" 9","VERMELHO","2"},{" 9","VERDE   ","2"},{" 9","AMARELO ","2"},{" 9","AZUL    ","2"},{"+2","VERMELHO","2"},{"+2","VERDE   ","2"},{"+2","AMARELO ","2"},{"+2","AZUL    ","2"},{" Ѳ","VERMELHO","2"},{" Ѳ","VERDE   ","2"},{" Ѳ","AMARELO ","2"},{" Ѳ","AZUL    ","2"},{" Ѻ","VERMELHO","2"},{" Ѻ","VERDE   ","2"},{" Ѻ","AMARELO ","2"},{" Ѻ","AZUL    ","2"}}					
+	inteiro numero,carta_jogada,qnt_cartas_jogador = 0,qnt_cartas_pc = 0, cor_coringa
+	logico validar_comprar = verdadeiro  
 	cadeia jogador
 	cadeia play
 
@@ -26,6 +27,49 @@ programa{
 		mostrar_cartas_pc(7)
 		mostrar_cartas_mesa(deck_mesa[0], deck_mesa[1])
 		mostrar_cartas_jogador(7)
+		escreva("\n")
+	}
+	funcao coringa(inteiro c){
+		escolha (c){
+			caso 1:
+				deck_mesa[1] = "VERMELHO"
+				pare
+			caso 2:
+				deck_mesa[1] = "VERDE"
+				pare	
+			caso 3:
+				deck_mesa[1] = "AMARELO"
+				pare	
+			caso 4:
+				deck_mesa[1] = "AZUL"
+				pare	
+		}
+	}
+	funcao mais_quatro(caracter p, inteiro c){
+		comprar_carta(4, p, verdadeiro)
+		escolha (p){
+			caso 'P':
+				jogador = "JOGADOR"
+				pare
+			caso 'J':
+				jogador = "PC"	
+				pare
+		}
+		coringa(c)
+	}
+	funcao mais_dois(caracter p){
+		comprar_carta(2, p, verdadeiro)
+		escolha (p){
+			caso 'P':
+				jogador = "JOGADOR"
+				pare
+			caso 'J':
+				jogador = "PC"	
+				pare
+		}
+	}
+	funcao reverter_bloquear(cadeia p){
+		jogador = p		
 	}
 	funcao distribuicao_cartas(inteiro n, caracter player){
 		para (inteiro s = 0; s < n; s++){
@@ -63,7 +107,7 @@ programa{
 		interior3_carta = tx.preencher_a_esquerda(' ',48,"▌▒▒     ▒▒▐ ")
 		numero_carta = tx.preencher_a_esquerda(' ',48,"▌▒  "+carta+"   ▒▐ ")
 		fundo_carta = tx.preencher_a_esquerda(' ',48,"▀▀▀▀▀▀▀▀▀▀▀ ")
-		escreva(topo_carta+"\n"+interior1_carta+"\n"+interior2_carta+"\n"+interior3_carta+"\n"+numero_carta+tx.preencher_a_esquerda(' ',34, "TURNO: "+ jogador)+"\n"+interior3_carta+"\n"+interior2_carta+tx.preencher_a_esquerda(' ',38, "COMPRAR CARTA(0) ")+"\n"+interior1_carta+"\n"+fundo_carta+"\n")
+		escreva(topo_carta+"\n"+interior1_carta+"\n"+interior2_carta+"\n"+interior3_carta+"\n"+numero_carta+tx.preencher_a_esquerda(' ',34, "TURNO: "+ jogador)+"\n"+interior3_carta+"\n"+interior2_carta+tx.preencher_a_esquerda(' ',38, lbl_comprar)+"\n"+interior1_carta+"\n"+fundo_carta+"\n")
 		escreva(tx.preencher_a_esquerda(' ',45, cor+"\n"))
 	}
 	funcao mostrar_cartas_pc(inteiro qnt_cartas){
@@ -115,7 +159,6 @@ programa{
 		escreva(" ///////  //      ///   /////// \n")
 		escreva("COMEÇAR O JOGO? [S/N]\n")
 	}
-	
 	funcao inicio()
 	{	
 		faca{
@@ -130,21 +173,46 @@ programa{
 			enquanto(qnt_cartas_jogador > 0 ou qnt_cartas_pc > 0){
 				se (jogador == "PC"){
 					leia(carta_jogada)
-					se(carta_jogada == 0){
-						comprar_carta(1, 'P')
+					se(carta_jogada == 0 e validar_comprar == verdadeiro){
+						lbl_comprar = "PASSAR VEZ (0)"
+						comprar_carta(1, 'P',falso)
+						validar_comprar = falso
+					}senao se(carta_jogada == 0 e validar_comprar == falso){
+						jogador = "JOGADOR"
+						lbl_comprar = "COMPRAR CARTA (0)"
+						validar_comprar = verdadeiro
+						limpa()
+						mostrar_cartas_pc(qnt_cartas_pc)
+						mostrar_cartas_mesa(deck_mesa[0],deck_mesa[1])
+						mostrar_cartas_jogador(qnt_cartas_jogador)
+						escreva("\n")
 					}
 				}senao se(jogador == "JOGADOR"){
 					leia(carta_jogada)
-					se(carta_jogada == 0){
-						comprar_carta(1, 'J')
+					se(carta_jogada == 0 e validar_comprar == verdadeiro){
+						lbl_comprar = "PASSAR VEZ (0)"
+						comprar_carta(1, 'J',falso)
+						validar_comprar = falso
+					}senao se(carta_jogada == 0 e validar_comprar == falso){
+						jogador = "PC"
+						lbl_comprar = "COMPRAR CARTA (0)"
+						validar_comprar = verdadeiro
+						limpa()
+						mostrar_cartas_pc(qnt_cartas_pc)
+						mostrar_cartas_mesa(deck_mesa[0],deck_mesa[1])
+						mostrar_cartas_jogador(qnt_cartas_jogador)
+						escreva("\n")
 					}senao{
-						enquanto(deck_jogador[carta_jogada-1][0] != deck_mesa[0] e deck_jogador[carta_jogada-1][1] != deck_mesa[1]){
+						se (deck_jogador[carta_jogada-1][0] != deck_mesa[0] e deck_jogador[carta_jogada-1][1] != deck_mesa[1] e deck_jogador[carta_jogada-1][1] != "ESPECIAL" ou carta_jogada > qnt_cartas_jogador){
 							limpa()
+							mostrar_cartas_pc(qnt_cartas_pc)
 							mostrar_cartas_mesa(deck_mesa[0],deck_mesa[1])
 							mostrar_cartas_jogador(qnt_cartas_jogador)
 							escreva("\n")
+						}senao{
+							jogar_carta_jogador()
+							validar_comprar = verdadeiro
 						}
-						jogar_carta_jogador()
 					}
 				}
 			}				
@@ -153,6 +221,22 @@ programa{
 	funcao jogar_carta_jogador(){
 		deck_mesa[0] = deck_jogador[carta_jogada - 1][0]
 		deck_mesa[1] = deck_jogador[carta_jogada - 1][1]
+		se (deck_jogador[carta_jogada - 1][0] == " Ͼ"){
+			limpa()
+			escreva("Escolha uma cor:\nVERMELHO(1) | VERDE(2) | AMARELO(3) | AZUL(4)\n")
+			leia(cor_coringa)
+			coringa(cor_coringa)
+		}senao se (deck_jogador[carta_jogada - 1][0] == "+4"){
+			limpa()
+			escreva("Escolha uma cor:\nVERMELHO(1) | VERDE(2) | AMARELO(3) | AZUL(4)\n")
+			leia(cor_coringa)
+			mais_quatro('P',cor_coringa)
+		}senao se(deck_jogador[carta_jogada - 1][0] == "+2"){
+			mais_dois('P')
+		}senao se (deck_jogador[carta_jogada - 1][0] == " Ѻ" ou deck_jogador[carta_jogada - 1][0] == " Ѳ"){
+			reverter_bloquear(jogador)
+		}
+		jogador = "PC"
 		para(inteiro i = 0; i< qnt_cartas_jogador - 1; i++){
 			se (i < carta_jogada - 1){
 				deck_jogador[i][0] = deck_jogador[i][0]
@@ -163,13 +247,14 @@ programa{
 				deck_jogador[i-1][1] = deck_jogador[i][1]
 			}
 		}
+		qnt_cartas_jogador--
 		limpa()
 		mostrar_cartas_pc(qnt_cartas_pc)
 		mostrar_cartas_mesa(deck_mesa[0],deck_mesa[1])
-		mostrar_cartas_jogador(qnt_cartas_jogador-1)
-		jogador = "PC"
+		mostrar_cartas_jogador(qnt_cartas_jogador)
 	}
 	funcao jogar_carta_pc(inteiro c){
+		jogador = "JOGADOR"
 		deck_mesa[0] = deck_jogador[c - 1][0]
 		deck_mesa[1] = deck_jogador[c - 1][1]
 		para(inteiro i = 0; i< qnt_cartas_jogador - 1; i++){
@@ -182,13 +267,13 @@ programa{
 				deck_pc[i-1][1] = deck_pc[i][1]
 			}
 		}
+		qnt_cartas_pc--
 		limpa()
-		mostrar_cartas_pc(qnt_cartas_pc - 1)
+		mostrar_cartas_pc(qnt_cartas_pc)
 		mostrar_cartas_mesa(deck_mesa[0],deck_mesa[1])
 		mostrar_cartas_jogador(qnt_cartas_jogador)
-		jogador = "JOGADOR"
 	}
-	funcao comprar_carta(inteiro n, caracter p){
+	funcao comprar_carta(inteiro n, caracter p, logico carta){
 		para (inteiro i = 0; i < n; i++){
 			faca{
 				numero  = u.sorteia(0, 53)
@@ -196,8 +281,8 @@ programa{
 			CARTAS[numero][2] = tip.inteiro_para_cadeia(tip.cadeia_para_inteiro(CARTAS[numero][2],10) - 1, 10)
 			escolha(p){
 				caso 'J':
-					deck_jogador[qnt_cartas_jogador-1][0] = CARTAS[numero][0]
-					deck_jogador[qnt_cartas_jogador-1][1] = CARTAS[numero][1]
+					deck_jogador[qnt_cartas_jogador][0] = CARTAS[numero][0]
+					deck_jogador[qnt_cartas_jogador][1] = CARTAS[numero][1]
 					qnt_cartas_jogador++
 					pare
 				caso 'P':
@@ -206,10 +291,13 @@ programa{
 					qnt_cartas_pc++
 					pare
 			}
-			limpa()
-			mostrar_cartas_pc(qnt_cartas_pc)
-			mostrar_cartas_mesa(deck_mesa[0], deck_mesa[1])
-			mostrar_cartas_jogador(qnt_cartas_jogador)
+			se(carta == falso){
+				limpa()
+				mostrar_cartas_pc(qnt_cartas_pc)
+				mostrar_cartas_mesa(deck_mesa[0], deck_mesa[1])
+				mostrar_cartas_jogador(qnt_cartas_jogador)
+				escreva("\n")
+			}
 		}
 	}
 }
@@ -218,9 +306,9 @@ programa{
  * Esta seção do arquivo guarda informações do Portugol Studio.
  * Você pode apagá-la se estiver utilizando outro editor.
  * 
- * @POSICAO-CURSOR = 7441; 
+ * @POSICAO-CURSOR = 8046; 
  * @PONTOS-DE-PARADA = ;
- * @SIMBOLOS-INSPECIONADOS = ;
+ * @SIMBOLOS-INSPECIONADOS = {validar_comprar, 10, 8, 15};
  * @FILTRO-ARVORE-TIPOS-DE-DADO = inteiro, real, logico, cadeia, caracter, vazio;
  * @FILTRO-ARVORE-TIPOS-DE-SIMBOLO = variavel, matriz, funcao;
  */
