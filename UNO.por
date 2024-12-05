@@ -3,11 +3,11 @@ programa{
 	inclua biblioteca Util --> u 
 	inclua biblioteca Texto --> tx
 	inclua biblioteca Tipos --> tip
-	cadeia topo_carta,interior1_carta,interior2_carta,interior3_carta,numero_carta,fundo_carta, cor_carta, lbl_comprar = "COMPRAR CARTA(0) "
+	cadeia topo_carta,uno,interior1_carta,interior2_carta,interior3_carta,numero_carta,fundo_carta, cor_carta, lbl_comprar = "COMPRAR CARTA(0) "
 	cadeia deck_mesa[2], deck_jogador[108][2], deck_pc[108][2]
 	cadeia CARTAS[54][3] = {{"+4","ESPECIAL","4"},{" Ͼ","ESPECIAL","4"}, {" 0","VERMELHO","1"},{" 0","VERDE   ","1"},{" 0","AMARELO ","1"},{" 0","AZUL    ","1"},{" 1","VERMELHO","2"},{" 1","VERDE   ","2"},{" 1","AMARELO ","2"},{" 1","AZUL    ","2"},{" 2","VERMELHO","2"},{" 2","VERDE   ","2"},{" 2","AMARELO ","2"},{" 2","AZUL    ","2"},{" 3","VERMELHO","2"},{" 3","VERDE   ","2"},{" 3","AMARELO ","2"},{" 3","AZUL    ","2"},{" 4","VERMELHO","2"},{" 4","VERDE   ","2"},{" 4","AMARELO ","2"},{" 4","AZUL    ","2"},{" 5","VERMELHO","2"},{" 5","VERDE   ","2"},{" 5","AMARELO ","2"},{" 5","AZUL    ","2"},{" 6","VERMELHO","2"},{" 6","VERDE   ","2"},{" 6","AMARELO ","2"},{" 6","AZUL    ","2"},{" 7","VERMELHO","2"},{" 7","VERDE   ","2"},{" 7","AMARELO ","2"},{" 7","AZUL    ","2"},{" 8","VERMELHO","2"},{" 8","VERDE   ","2"},{" 8","AMARELO ","2"},{" 8","AZUL    ","2"},{" 9","VERMELHO","2"},{" 9","VERDE   ","2"},{" 9","AMARELO ","2"},{" 9","AZUL    ","2"},{"+2","VERMELHO","2"},{"+2","VERDE   ","2"},{"+2","AMARELO ","2"},{"+2","AZUL    ","2"},{" Ѳ","VERMELHO","2"},{" Ѳ","VERDE   ","2"},{" Ѳ","AMARELO ","2"},{" Ѳ","AZUL    ","2"},{" Ѻ","VERMELHO","2"},{" Ѻ","VERDE   ","2"},{" Ѻ","AMARELO ","2"},{" Ѻ","AZUL    ","2"}}					
 	inteiro numero,carta_jogada,qnt_cartas_jogador = 0,qnt_cartas_pc = 0, cor_coringa
-	logico validar_comprar = verdadeiro  
+	logico validar_comprar = verdadeiro, validar_uno = falso  
 	cadeia jogador
 	cadeia play
 
@@ -46,7 +46,6 @@ programa{
 		}
 	}
 	funcao mais_quatro(caracter p, inteiro c){
-		comprar_carta(4, p, verdadeiro)
 		escolha (p){
 			caso 'P':
 				jogador = "JOGADOR"
@@ -55,10 +54,10 @@ programa{
 				jogador = "PC"	
 				pare
 		}
+		comprar_carta(4, p, verdadeiro)
 		coringa(c)
 	}
 	funcao mais_dois(caracter p){
-		comprar_carta(2, p, verdadeiro)
 		escolha (p){
 			caso 'P':
 				jogador = "JOGADOR"
@@ -67,9 +66,15 @@ programa{
 				jogador = "PC"	
 				pare
 		}
+		comprar_carta(2, p, verdadeiro)
 	}
 	funcao reverter_bloquear(cadeia p){
-		jogador = p		
+		se (p == "JOGADOR"){
+			jogador = "PC"		
+		}senao{
+			jogador = "JOGADOR"
+		}
+		lbl_comprar = "COMPRAR CARTA(0)"
 	}
 	funcao distribuicao_cartas(inteiro n, caracter player){
 		para (inteiro s = 0; s < n; s++){
@@ -188,7 +193,38 @@ programa{
 						escreva("\n")
 					}
 				}senao se(jogador == "JOGADOR"){
-					leia(carta_jogada)
+					se (qnt_cartas_jogador == 2 e validar_uno == falso){
+						escreva("DIGITE O NUMERO CORRESPONDENTE DA CARTA QUE DESEJA JOGAR OU DIGITE UNO:\n")
+						leia(uno)
+						se (tip.cadeia_e_inteiro(uno,10) == falso e tx.caixa_alta(uno) == "UNO"){
+							validar_uno = verdadeiro
+							limpa()
+							escreva(" **     ** ****     **   ******* \n")
+							escreva("/**    /**/**/**   /**  **/////** \n")
+							escreva("/**    /**/**//**  /** **     //** \n")
+							escreva("/**    /**/** //** /**/**      /** \n")
+							escreva("/**    /**/**  //**/**/**      /** \n")
+							escreva("/**    /**/**   //****//**     ** \n")
+							escreva("//******* /**    //*** //******* \n")
+							escreva(" ///////  //      ///   /////// \n")
+							
+							limpa()
+							mostrar_cartas_pc(qnt_cartas_pc)
+							mostrar_cartas_mesa(deck_mesa[0],deck_mesa[1])
+							mostrar_cartas_jogador(qnt_cartas_jogador)
+							escreva("\n")
+						}senao se (tip.cadeia_e_inteiro(uno,10) == falso){
+							limpa()
+							mostrar_cartas_pc(qnt_cartas_pc)
+							mostrar_cartas_mesa(deck_mesa[0],deck_mesa[1])
+							mostrar_cartas_jogador(qnt_cartas_jogador)
+							escreva("\n")
+						}senao se (tip.cadeia_e_inteiro(uno,10) == verdadeiro){
+							carta_jogada = tip.cadeia_para_inteiro(uno, 10)
+						}
+					}senao{
+						leia(carta_jogada)
+					}
 					se(carta_jogada == 0 e validar_comprar == verdadeiro){
 						lbl_comprar = "PASSAR VEZ (0)"
 						comprar_carta(1, 'J',falso)
@@ -221,6 +257,7 @@ programa{
 	funcao jogar_carta_jogador(){
 		deck_mesa[0] = deck_jogador[carta_jogada - 1][0]
 		deck_mesa[1] = deck_jogador[carta_jogada - 1][1]
+		jogador = "PC"
 		se (deck_jogador[carta_jogada - 1][0] == " Ͼ"){
 			limpa()
 			escreva("Escolha uma cor:\nVERMELHO(1) | VERDE(2) | AMARELO(3) | AZUL(4)\n")
@@ -236,7 +273,6 @@ programa{
 		}senao se (deck_jogador[carta_jogada - 1][0] == " Ѻ" ou deck_jogador[carta_jogada - 1][0] == " Ѳ"){
 			reverter_bloquear(jogador)
 		}
-		jogador = "PC"
 		para(inteiro i = 0; i< qnt_cartas_jogador - 1; i++){
 			se (i < carta_jogada - 1){
 				deck_jogador[i][0] = deck_jogador[i][0]
@@ -306,7 +342,7 @@ programa{
  * Esta seção do arquivo guarda informações do Portugol Studio.
  * Você pode apagá-la se estiver utilizando outro editor.
  * 
- * @POSICAO-CURSOR = 8046; 
+ * @POSICAO-CURSOR = 8069; 
  * @PONTOS-DE-PARADA = ;
  * @SIMBOLOS-INSPECIONADOS = {validar_comprar, 10, 8, 15};
  * @FILTRO-ARVORE-TIPOS-DE-DADO = inteiro, real, logico, cadeia, caracter, vazio;
